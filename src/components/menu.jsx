@@ -49,6 +49,10 @@ export default function Menu() {
   return (
     <main className="menu">
       <h2 className="h2">Our Menu</h2>
+      <p>
+        Authentic Italian cuisine. 6 creative dishes to choose from. All from
+        our stove, all organic, all delicious
+      </p>
       <div className="pizzas">
         {pizzaData.map((pizza, index) => (
           <Pizza
@@ -57,6 +61,7 @@ export default function Menu() {
             ingredients={pizza.ingredients}
             photoName={pizza.photoName}
             price={pizza.price}
+            soldOut={pizza.soldOut}
           />
         ))}
       </div>
@@ -64,18 +69,16 @@ export default function Menu() {
   );
 }
 
-const Pizza = ({ name, ingredients, photoName, price }) => {
+const Pizza = ({ name, ingredients, photoName, price, soldOut }) => {
   return (
-    <div className="pizza">
+    <li className={`pizza ${soldOut ? "sold-out" : ""}`}>
+      <img src={photoName} className="img" alt={name} />
       <div>
-        <img src={photoName} className="img" alt={name} />
-        <div>
-          <h3 className="h3">{name}</h3>
-          <p className="p">{ingredients}</p>
-          <span className="span">{price}</span>
-        </div>
+        <h3>{name}</h3>
+        <p>{ingredients}</p>
+        <span>{soldOut ? "Sold Out" : price}</span>
       </div>
-    </div>
+    </li>
   );
 };
 
@@ -84,4 +87,5 @@ Pizza.propTypes = {
   ingredients: PropTypes.string,
   photoName: PropTypes.string,
   price: PropTypes.number,
+  soldOut: PropTypes.bool,
 };
